@@ -1,36 +1,36 @@
 <div class="blog-search-panel">
-<label class="blog-search-panel__label" for="note-search">搜索文章</label>
-<div class="blog-search-panel__input-wrap"><input class="blog-search-panel__input" id="note-search" type="search" data-search aria-label="搜索标题、摘要或标签" placeholder="搜索标题、摘要、标签或分类"><button class="blog-search-panel__clear" type="button" data-clear>清除</button></div>
-<p class="blog-search-panel__status" aria-live="polite" data-result-count>{{ include.items.size }} 篇文章</p>
+<label class="blog-search-panel__label" for="note-search">Search posts</label>
+<div class="blog-search-panel__input-wrap"><input class="blog-search-panel__input" id="note-search" type="search" data-search aria-label="Search blog posts" placeholder="Search by title, excerpt, tag, or category"><button class="blog-search-panel__clear" type="button" data-clear>Clear</button></div>
+<p class="blog-search-panel__status" aria-live="polite" data-result-count>{{ include.items.size }} posts total</p>
 </div>
 <div class="blog-card-list">
 {% for post in include.items %}
 <article class="blog-card" data-search-text="{{ post.title | downcase | escape }} {{ post.summary | downcase | escape }} {{ post.paper_title | downcase | escape }} {{ post.tags | join: ' ' | downcase | escape }}">
 {% if post.cover %}
-<a class="blog-card__cover-link" href="{{ post.url | relative_url }}"><img class="blog-card__cover" src="{{ post.cover | relative_url }}" alt="{{ post.title | escape }}的封面"></a>
+<a class="blog-card__cover-link" href="{{ post.url | relative_url }}"><img class="blog-card__cover" src="{{ post.cover | relative_url }}" alt="{{ post.title | escape }} cover image"></a>
 {% elsif post.slug == 'hello' %}
-<a class="blog-card__cover-link" href="{{ post.url | relative_url }}" aria-label="阅读：{{ post.title | escape }}">
-<svg class="blog-card__cover" viewBox="0 0 1000 562.5" role="img" aria-label="从技术阅读到个人思考：提出问题、理解方法、审视证据" xmlns="http://www.w3.org/2000/svg">
+<a class="blog-card__cover-link" href="{{ post.url | relative_url }}" aria-label="Read: {{ post.title | escape }}">
+<svg class="blog-card__cover" viewBox="0 0 1000 562.5" role="img" aria-label="From technical reading to personal insights: question, understand, examine" xmlns="http://www.w3.org/2000/svg">
 <rect width="1000" height="562.5" fill="white"/>
-<text x="500" y="70" text-anchor="middle" font-size="30" font-weight="700" fill="#202124">从技术阅读，到自己的理解</text>
+<text x="500" y="70" text-anchor="middle" font-size="30" font-weight="700" fill="#202124">From Reading to Understanding</text>
 <text x="500" y="112" text-anchor="middle" font-size="18" fill="#5f6368">Technical notes · Paper reading · Personal insights</text>
 <g fill="#fff" stroke="#444" stroke-width="2"><rect x="50" y="180" width="260" height="180" rx="6"/><rect x="370" y="180" width="260" height="180" rx="6"/><rect x="690" y="180" width="260" height="180" rx="6"/></g>
-<g fill="#202124" text-anchor="middle" font-size="25"><text x="180" y="239">提出问题</text><text x="500" y="239">理解方法</text><text x="820" y="239">审视证据</text></g>
-<g fill="#5f6368" text-anchor="middle" font-size="19"><text x="180" y="285">它在解决什么？</text><text x="500" y="285">为什么这样设计？</text><text x="820" y="285">结论在何处成立？</text></g>
+<g fill="#202124" text-anchor="middle" font-size="25"><text x="180" y="239">Question</text><text x="500" y="239">Understand</text><text x="820" y="239">Examine</text></g>
+<g fill="#5f6368" text-anchor="middle" font-size="19"><text x="180" y="285">What is the problem?</text><text x="500" y="285">Why this design?</text><text x="820" y="285">What does the evidence show?</text></g>
 <g stroke="#444" stroke-width="2" fill="none"><path d="M315 270H360m-9-6 9 6-9 6"/><path d="M635 270H680m-9-6 9 6-9 6"/></g>
 <path d="M80 410H920" stroke="#eee"/>
-<text x="500" y="460" text-anchor="middle" font-size="23" fill="#ca6f6f">写下判断，也留下尚未想清楚的问题。</text>
-<text x="500" y="505" text-anchor="middle" font-size="16" fill="#6b7280">Ruojun Qin · 技术笔记</text>
+<text x="500" y="460" text-anchor="middle" font-size="23" fill="#ca6f6f">Share a perspective. Leave room for open questions.</text>
+<text x="500" y="505" text-anchor="middle" font-size="16" fill="#6b7280">Ruojun Qin · Technical Notes</text>
 </svg></a>
 {% endif %}
 <div class="blog-card__content">
-<div class="blog-card__meta-row"><time class="blog-card__date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%Y年%m月%d日' }}</time><span class="blog-card__reading-time">{% if post.collection == 'papers' %}论文解读{% else %}技术笔记{% endif %}</span></div>
+<div class="blog-card__meta-row"><time class="blog-card__date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%B %d, %Y' }}</time><span class="blog-card__reading-time">{% if post.collection == 'papers' %}Paper Discussion{% else %}Technical Notes{% endif %}</span></div>
 <h2 class="blog-card__title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
-<div class="blog-card__taxonomies"><span class="blog-card__chip blog-card__chip--category">{% if post.collection == 'papers' %}论文分享{% else %}技术笔记{% endif %}</span></div>
+<div class="blog-card__taxonomies"><span class="blog-card__chip blog-card__chip--category">{% if post.collection == 'papers' %}Research Paper Sharing{% else %}Technical Notes{% endif %}</span></div>
 <div class="blog-card__taxonomies">{% for tag in post.tags %}<span class="blog-card__chip blog-card__chip--tag">#{{ tag }}</span>{% endfor %}</div>
 <p class="blog-card__excerpt">{{ post.summary }}</p>
-<a class="blog-card__link" href="{{ post.url | relative_url }}" aria-label="阅读全文：{{ post.title | escape }}">阅读全文</a>
+<a class="blog-card__link" href="{{ post.url | relative_url }}" aria-label="Read more: {{ post.title | escape }}">Read more</a>
 </div></article>
 {% endfor %}
 </div>
-<div class="blog-empty-state" data-no-results hidden>没有找到匹配的文章，请换一个关键词或清除搜索。</div>
+<div class="blog-empty-state" data-no-results hidden>No posts match your search. Try another keyword or clear the search.</div>
