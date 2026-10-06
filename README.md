@@ -9,13 +9,15 @@ A public research space for technical insights, paper readings, and personal per
 ## Write and publish
 
 1. Open the Blog and select **Write a Post**. For a paper discussion, select **Share a Paper** on Research Paper Sharing.
-2. Fill in the title, summary, tags, and Markdown content. The editor keeps one draft per post type in the current browser.
-3. Select **Open GitHub Editor**. Short posts are prefilled. For a long post, copy the complete Markdown and paste it into the GitHub editor, or download the `.md` file.
-4. Review the **Preview** tab, then **Commit changes** to `main`. GitHub Pages builds and publishes the update.
+2. Write in the live editor: headings, lists, tables, formulas, and code render in place, similar to Typora. Title and summary are editable above the page; date, tags, and paper details are under **Post settings**. The editor keeps one draft per post type in the current browser, including drafts saved by the previous editor.
+3. Select **Publish…** when the writing is ready, then **Continue to GitHub**. Short posts are prefilled. For a long post, copy the complete Markdown from the publishing dialog and paste it into GitHub, or download the `.md` file.
+4. Select **Commit changes** to `main`. GitHub Pages builds and publishes the update. Writing and formatting happen on the site; GitHub is the final publishing confirmation.
 
 Only the owner and authorized collaborators can commit directly. The writing page itself does not publish content or require a GitHub token. Browser drafts are local to that browser; download Markdown for a portable backup.
 
-Existing articles have an **Edit this Post** link. Images can be uploaded to `images/` in the repository and referenced as `![Description](/images/example.png)`. Set a cover path or URL for the article card. Enable LaTeX math when needed.
+Existing articles have an **Edit this Post** link. Images can be uploaded to `images/` in the repository, then inserted with the image toolbar button or referenced as `![Description](/images/example.png)`. Set a cover path or URL in Post settings. Inline `$…$` and display `$$…$$` equations render while writing; the export automatically enables math when formulas are detected.
+
+The editor uses MIT-licensed [Vditor](https://github.com/Vanessa219/vditor) 4.0.0, pinned on jsDelivr. It defaults to instant rendering and also supports rich text and Markdown source modes. Drafts and rendering stay in the browser; no GitHub token is stored. If the editor dependency cannot load, the draft remains available in a Markdown textarea. Publishing still requires GitHub's authenticated confirmation.
 
 You can also write in Obsidian or another Markdown editor, then paste the body into the writing page. Alternatively copy `templates/post.md` into `_blog/your-post.md` or `templates/paper.md` into `_papers/your-paper.md`, fill in metadata, and set `published: true`.
 
