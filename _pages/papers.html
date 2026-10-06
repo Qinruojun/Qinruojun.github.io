@@ -1,13 +1,11 @@
 ---
 permalink: /papers/
 title: 论文分享
-eyebrow: PAPER NOTES
-intro: "从论文出发，形成自己的理解。关注问题、证据与方法，也讨论设计取舍和未解之处。"
+intro: "论文解读、技术判断，以及阅读中产生的疑问与启发。"
 ---
 {% assign notes = site.papers | where_exp: 'note', 'note.published != false' | sort: 'date' | reverse %}
 {% if notes.size > 0 %}
-  {% include note-list.html items=notes heading='全部论文解读' %}
+{% include note-list.html items=notes heading='全部论文解读' %}
 {% else %}
-  <div class="notes-empty"><div class="notes-empty-number" aria-hidden="true">01.</div><h2>从第一篇值得讨论的论文开始。</h2><p>这里还没有公开的论文笔记。之后的解读，会把论文的结论、我的理解和待验证的想法分别写清楚。</p></div>
-  <div class="notes-principles"><section><span>01 / QUESTION</span><h2>它解决什么问题</h2><p>问题设置、方法直觉与关键设计。</p></section><section><span>02 / EVIDENCE</span><h2>证据支持什么</h2><p>实验结果、消融分析与适用边界。</p></section><section><span>03 / INSIGHT</span><h2>我从中看到了什么</h2><p>个人判断、不同意见与下一步问题。</p></section></div>
+<div class="blog-empty-state"><p>暂时还没有公开的论文笔记。</p><p>这里将记录论文的问题、方法与证据，以及我的理解和看法。</p></div>
 {% endif %}
