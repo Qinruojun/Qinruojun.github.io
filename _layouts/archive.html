@@ -4,8 +4,10 @@ layout: default
 <div id="main" role="main">
 {% include sidebar.html %}
 <div class="archive">
-<h1 class="page__title">{{ page.title }}</h1>
-{% if page.url == '/' or page.url == '/blog/' %}<h2 class="main-heading">Blog</h2>{% elsif page.url == '/papers/' %}<h2 class="main-heading">Paper Notes</h2>{% endif %}
+<div class="archive-heading"><h1 class="page__title">{{ page.title }}</h1>
+{% if page.url == '/blog/' %}<a class="write-button" href="{{ '/write/' | relative_url }}">Write a Post</a>{% elsif page.url == '/papers/' %}<a class="write-button" href="{{ '/write/' | relative_url }}?type=paper">Share a Paper</a>{% endif %}
+</div>
+{% if page.url == '/blog/' %}<h2 class="main-heading">Blog</h2>{% elsif page.url == '/papers/' %}<h2 class="main-heading">Paper Notes</h2>{% endif %}
 {% if page.intro %}<p class="blog-intro">{{ page.intro }}</p>{% endif %}
 {{ content }}
 </div></div>
