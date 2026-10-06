@@ -1,30 +1,30 @@
 ---
-title: "开始记录：技术理解、论文阅读与未完成的思考"
+title: "Getting Started: Technical Notes, Paper Readings, and Open Questions"
 date: "2026-10-06"
 slug: "hello"
-summary: "给研究与学习中的思考留一个位置。从具身智能与机器人学习出发，把问题、理解和判断写清楚。"
-tags: ["随笔", "研究与学习"]
+summary: "A place for ideas from research and learning. Starting with embodied AI and robot learning, I want to make my questions, understanding, and judgments explicit."
+tags: ["Reflections", "Research & Learning"]
 published: true
 ---
 
-这里是我的技术博客，主要记录具身智能、机器人学习相关的阅读与思考。
+This is my technical blog, where I write about embodied AI, robot learning, and the questions that come up along the way.
 
-我希望把一篇论文、一个技术概念，或者一个实验中遇到的问题，整理成可以被讨论和不断修正的文字。
+I want to turn a paper, a technical concept, or a problem encountered during an experiment into something that can be discussed and revised.
 
-## 这里会写什么
+## What I will write about
 
-- **技术笔记**：梳理模型、算法与实现细节，尽量把直觉和推导连接起来。
-- **论文分享**：解释一篇工作试图解决什么问题、证据支持什么，以及它留下了哪些问题。
-- **个人思考**：记录我对技术路线和设计取舍的理解，包括还没有定论的想法。
+- **Technical notes**: models, algorithms, and implementation details, connecting intuition with derivations.
+- **Paper discussions**: the problem a paper tackles, the evidence it provides, and the questions it leaves open.
+- **Personal perspectives**: my understanding of technical approaches and design choices, including ideas without a settled conclusion.
 
-## 如何表达一个观点
+## How I want to express a view
 
-我希望区分三件事：论文或实验给出的证据、基于证据的解释，以及仍然需要验证的猜想。
+I try to distinguish the evidence in a paper or experiment, my interpretation of that evidence, and hypotheses that still need to be tested.
 
-这也是写作的一个目标：不只记录“是什么”，也试着说清楚“为什么这样理解”，以及“这个理解可能在哪里失效”。
+The goal is to explain both what I understand and why I understand it that way, including where that understanding might fail.
 
-## 从小问题开始
+## Start with a small question
 
-不必等到对一个领域完全熟悉才开始记录。一篇笔记可以只回答一个具体问题，也可以留下一个明确的疑问。
+A note can answer one specific question or leave one clear question open. I do not need to understand an entire field before I start writing.
 
-这些文字会随着新的阅读和实践继续更新。欢迎通过 [GitHub](https://github.com/Qinruojun) 交流。
+These notes will evolve with further reading and practice. You can find me on [GitHub](https://github.com/Qinruojun).
