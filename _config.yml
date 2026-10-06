@@ -1,7 +1,7 @@
-locale: zh-CN
-title: "Ruojun Qin · 技术笔记"
+locale: en-US
+title: "Ruojun Qin · Research Space"
 name: "Ruojun Qin"
-description: "关于具身智能、机器人学习的技术笔记、论文解读与个人思考。"
+description: "Technical notes, paper discussions, and personal insights on embodied AI and robot learning."
 url: "https://qinruojun.github.io"
 baseurl: ""
 repository: "Qinruojun/Qinruojun.github.io"
@@ -13,7 +13,7 @@ remote_theme: "oplisty/oplisty.github.io@77a3d7c5969206e07ffb76c69b5b03e05d84ed3
 
 author:
   name: "Ruojun Qin"
-  bio: "关注具身智能与机器人学习。记录技术理解，也记录尚未想清楚的问题。"
+  bio: "Exploring embodied AI and robot learning. Sharing technical insights, paper readings, and open questions."
   github: Qinruojun
   topics:
     - Embodied AI
