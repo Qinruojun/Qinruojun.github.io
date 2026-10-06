@@ -1,0 +1,12 @@
+---
+layout: default
+---
+<div id="main" role="main">
+  {% include sidebar.html %}
+  <div class="archive notes-archive">
+    {% if page.eyebrow %}<p class="notes-eyebrow">{{ page.eyebrow }}</p>{% endif %}
+    <h1 class="page__title">{{ page.title }}</h1>
+    {% if page.intro %}<p class="notes-intro">{{ page.intro }}</p>{% endif %}
+    {{ content }}
+  </div>
+</div>
