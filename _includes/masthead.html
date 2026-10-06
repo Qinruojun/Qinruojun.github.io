@@ -1,7 +1,7 @@
-<a class="skip-link" href="#main">跳到正文</a>
+<a class="skip-link" href="#main">Skip to content</a>
 <div class="masthead"><div class="masthead__inner-wrap"><div class="masthead__menu">
-<nav id="site-nav" class="greedy-nav" aria-label="主导航"><ul class="visible-links">
-<li class="masthead__menu-item masthead__menu-item--lg"><a href="{{ '/' | relative_url }}">Ruojun Qin 的研究空间</a></li>
+<nav id="site-nav" class="greedy-nav" aria-label="Main navigation"><ul class="visible-links">
+<li class="masthead__menu-item masthead__menu-item--lg"><a href="{{ '/' | relative_url }}">Ruojun Qin's Research Space</a></li>
 {% for link in site.data.navigation.main %}
 <li class="masthead__menu-item"><a href="{% if link.url contains 'http' %}{{ link.url }}{% else %}{{ link.url | relative_url }}{% endif %}"{% if page.url contains link.url %} aria-current="page"{% endif %}>{{ link.title }}</a></li>
 {% endfor %}
