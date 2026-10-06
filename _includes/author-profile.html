@@ -1,0 +1,11 @@
+<div class="notes-author" itemscope itemtype="https://schema.org/Person">
+  <div class="notes-monogram" aria-hidden="true">RQ</div>
+  <div class="author__content">
+    <h2 class="author__name" itemprop="name">{{ site.author.name }}</h2>
+    <p class="notes-handle">@{{ site.author.github }}</p>
+    <p class="author__bio">{{ site.author.bio }}</p>
+  </div>
+  <a class="notes-profile-link" href="https://github.com/{{ site.author.github }}">GitHub / {{ site.author.github }}</a>
+  <div class="notes-topics"><p class="notes-eyebrow">RESEARCH INTERESTS</p><ul>{% for topic in site.author.topics %}<li>{{ topic }}</li>{% endfor %}</ul></div>
+  <p class="notes-aside-end">技术理解 · 论文阅读<br>与未完成的思考</p>
+</div>

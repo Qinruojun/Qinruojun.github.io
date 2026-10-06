@@ -1,0 +1,13 @@
+<div class="notes-search"><label for="note-search">搜索文章</label><div><input id="note-search" type="search" data-search aria-label="搜索标题、摘要或标签" placeholder="搜索标题、关键词或标签…"><button class="clear-search" type="button" data-clear hidden>清除</button></div></div>
+<div class="notes-list-heading"><h2>{{ include.heading }}</h2><span aria-live="polite" data-result-count>{{ include.items.size }} 篇文章</span></div>
+<div class="notes-list">
+{% for post in include.items %}
+  <article class="notes-card" data-search-text="{{ post.title | downcase | escape }} {{ post.summary | downcase | escape }} {{ post.paper_title | downcase | escape }} {{ post.tags | join: ' ' | downcase | escape }}">
+    <p class="notes-meta"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%Y.%m.%d' }}</time><span>·</span>{% if post.collection == 'papers' %}论文解读{% else %}技术笔记{% endif %}</p>
+    <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+    <p class="notes-excerpt">{{ post.summary }}</p>
+    <div class="notes-card-bottom"><div class="notes-tags">{% for tag in post.tags %}<span>{{ tag }}</span>{% endfor %}</div><a class="notes-read" href="{{ post.url | relative_url }}" aria-label="阅读全文：{{ post.title | escape }}">阅读全文</a></div>
+  </article>
+{% endfor %}
+</div>
+<p class="notes-no-results" data-no-results hidden>没有找到匹配的文章。试试其他关键词，或清除搜索。</p>

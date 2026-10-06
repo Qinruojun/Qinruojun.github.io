@@ -1,0 +1,3 @@
+{% assign notes = site.blog | where_exp: 'note', 'note.published != false' | sort: 'date' | reverse %}
+{% if notes.size > 0 %}{% include note-list.html items=notes heading='全部笔记' %}{% else %}<div class="notes-empty"><h2>第一篇笔记，从一个问题开始。</h2><p>技术笔记将在这里陆续更新。</p></div>{% endif %}
+<p class="notes-afterword">单篇论文的解读与讨论，收录在 <a href="{{ '/papers/' | relative_url }}">论文分享</a>。</p>
