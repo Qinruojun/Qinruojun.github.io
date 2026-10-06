@@ -10,7 +10,7 @@ function initBlog() {
   const terms=field.value.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
   let visible=0;
   for(const card of cards){card.hidden=!terms.every(term=>card.dataset.searchText.includes(term));if(!card.hidden)visible++;}
-  count.textContent=terms.length?visible+' matching posts':cards.length+' posts total';
+  count.textContent=terms.length?visible+' matching '+(visible===1?'post':'posts'):cards.length+' '+(cards.length===1?'post':'posts')+' total';
   empty.hidden=visible!==0;
  }
  field.addEventListener('input',update);
