@@ -1,29 +1,58 @@
 ---
+layout: writer
 permalink: /write/
 title: Write a Post
 sitemap: false
 ---
-<p class="writer-intro">Write in Markdown. Your draft stays in this browser until you choose to publish.</p>
-<form id="post-writer" class="post-writer" data-repository="{{ site.repository }}">
-<div class="writer-grid">
-<label>Post type<select id="writer-type" name="type"><option value="blog">Blog post</option><option value="paper">Research paper discussion</option></select></label>
-<label>Date<input id="writer-date" name="date" type="date" required></label>
-</div>
-<label>Title<input id="writer-title" name="title" placeholder="What would you like to share?" required maxlength="200"></label>
-<label>Summary<textarea id="writer-summary" name="summary" rows="2" placeholder="A short description for the article card."></textarea></label>
-<div class="writer-grid">
-<label>Tags<input id="writer-tags" name="tags" placeholder="VLA, Robot Learning"></label>
-<label>URL name<input id="writer-slug" name="slug" pattern="[a-z0-9]+(?:-[a-z0-9]+)*" required aria-describedby="slug-help"></label>
-</div>
-<p class="writer-help" id="slug-help">Use lowercase letters, numbers, and hyphens. Each new post needs a unique name.</p>
-<div id="paper-fields" hidden><label>Original paper title<input id="writer-paper-title" name="paperTitle"></label><div class="writer-grid"><label>Paper URL<input id="writer-paper-url" name="paperUrl" type="url" placeholder="https://arxiv.org/abs/..."></label><label>Code URL (optional)<input id="writer-code-url" name="codeUrl" type="url" placeholder="https://github.com/..."></label></div></div>
-<label>Cover image URL or path (optional)<input id="writer-cover" name="cover" placeholder="/images/my-post/cover.png"></label>
-<label class="writer-checkbox"><input id="writer-math" name="math" type="checkbox"> Enable LaTeX math</label>
-<label>Post content<textarea id="writer-body" name="body" rows="18" spellcheck="true" required placeholder="## The question&#10;&#10;Write your ideas here..."></textarea></label>
-<p class="writer-help">Markdown supports headings, links, images, tables, and fenced code blocks. You can also paste Markdown from Obsidian.</p>
-<div class="writer-actions"><button class="write-button" type="submit">Open GitHub Editor</button><button type="button" id="writer-copy">Copy Markdown</button><button type="button" id="writer-download">Download .md</button><button type="button" id="writer-new">New Draft</button></div>
-<p id="writer-status" class="writer-status" role="status" aria-live="polite">Drafts are saved in this browser.</p>
-<div id="writer-long-post" class="writer-handoff" hidden><p>This post is too long to prefill safely. Copy the Markdown, open GitHub, and paste it into the file editor.</p><a id="writer-open-empty" target="_blank" rel="noopener noreferrer">Open GitHub for this post</a><details><summary>Show Markdown for manual copying</summary><textarea id="writer-export" rows="12" readonly aria-label="Complete Markdown export"></textarea></details></div>
+<form id="post-writer" class="writing-form" data-repository="{{ site.repository }}" novalidate>
+  <div class="desk-bar">
+    <a href="{{ '/blog/' | relative_url }}" class="desk-back">Back to Blog</a>
+    <span id="writer-status" class="desk-status" role="status" aria-live="polite">Your draft stays in this browser.</span>
+    <div class="desk-actions"><button type="button" id="writer-download" class="desk-button">Download .md</button><button type="submit" class="desk-button desk-primary">Publish…</button></div>
+  </div>
+  <div class="writing-sheet">
+    <h1 class="desk-sr-only">Write a Post</h1>
+    <label class="desk-sr-only" for="writer-title">Title</label>
+    <textarea id="writer-title" name="title" class="writing-title" rows="1" placeholder="Untitled" required maxlength="200"></textarea>
+    <label class="desk-sr-only" for="writer-summary">Summary</label>
+    <textarea id="writer-summary" name="summary" class="writing-summary" rows="1" placeholder="Add a short summary…"></textarea>
+    <details id="writer-settings" class="desk-settings">
+      <summary>Post settings <span id="writer-kind-label">Blog post</span></summary>
+      <div class="desk-settings-content">
+        <div class="desk-grid"><label>Post type<select id="writer-type" name="type"><option value="blog">Blog post</option><option value="paper">Research paper discussion</option></select></label><label>Date<input id="writer-date" name="date" type="date" required></label></div>
+        <div class="desk-grid"><label>Tags<input id="writer-tags" name="tags" placeholder="VLA, Robot Learning"></label><label>URL name<input id="writer-slug" name="slug" pattern="[a-z0-9]+(?:-[a-z0-9]+)*" required aria-describedby="slug-help"></label></div>
+        <p class="desk-help" id="slug-help">A unique URL for this post. Use lowercase letters, numbers, and hyphens.</p>
+        <div id="paper-fields" hidden><label>Original paper title<input id="writer-paper-title" name="paperTitle"></label><div class="desk-grid"><label>Paper URL<input id="writer-paper-url" name="paperUrl" type="url" placeholder="https://arxiv.org/abs/..."></label><label>Code URL (optional)<input id="writer-code-url" name="codeUrl" type="url" placeholder="https://github.com/..."></label></div></div>
+        <label>Cover image URL or path (optional)<input id="writer-cover" name="cover" placeholder="/images/my-post/cover.png"></label>
+        <label class="desk-checkbox"><input id="writer-math" name="math" type="checkbox"> Enable formulas in the published article</label>
+        <p class="desk-help">Formula rendering is enabled automatically when your draft contains math.</p>
+      </div>
+    </details>
+    <div class="desk-editor-wrap">
+      <p id="writer-loading" class="desk-help" role="status">Loading the live editor…</p>
+      <div id="writer-rich" hidden></div>
+      <label for="writer-body" id="writer-fallback-label" class="desk-sr-only">Post content (Markdown)</label>
+      <textarea id="writer-body" name="body" class="desk-source" rows="18" spellcheck="true" placeholder="Start writing…"></textarea>
+    </div>
+    <div class="desk-bottom"><span id="writer-count">0 words</span><span>Saved on this device</span><button type="button" id="writer-new" class="desk-text-button">New draft</button></div>
+    <details class="desk-guide"><summary>Formatting guide</summary><p>Type <code>## </code> for a heading, <code>**bold**</code> for emphasis, or <code>- </code> for a list. Use the toolbar for links, images, tables, and code blocks.</p><p>Write inline math with <code>$…$</code>, or put <code>$$</code> on separate lines for a display equation. Formatting appears in place as you write. The toolbar also lets you switch to rich text or Markdown source.</p><p>Drafts stay in this browser. Download a Markdown copy to keep a portable backup.</p></details>
+  </div>
 </form>
-<div class="writer-guide"><h2>Publish in three steps</h2><ol><li>Write your post here, then select <strong>Open GitHub Editor</strong>.</li><li>Sign in as the repository owner and use GitHub's <strong>Preview</strong> tab to check your post.</li><li>Select <strong>Commit changes</strong> and commit to <strong>main</strong>. The site updates after the Pages build completes.</li></ol><p>For an existing post, open the article and select <strong>Edit this Post</strong>. Only the repository owner and authorized collaborators can publish changes.</p></div>
-<noscript><p>JavaScript is needed for the draft editor. You can also <a href="https://github.com/{{ site.repository }}/new/main/_blog">create a Markdown post directly on GitHub</a>.</p></noscript>
+<dialog id="writer-publish-dialog" class="desk-dialog" aria-labelledby="publish-heading">
+  <button type="button" class="desk-dialog-close" data-close-dialog aria-label="Close publishing dialog">×</button>
+  <h2 id="publish-heading">Ready to publish?</h2>
+  <p id="publish-title" class="desk-publish-title"></p>
+  <p class="desk-help">Your writing is ready. GitHub handles the final confirmation: select <strong>Commit changes</strong> and commit to <strong>main</strong>. Your public site updates after the build finishes.</p>
+  <p id="publish-prefill" class="desk-help">Your complete post will already be filled in.</p>
+  <div id="writer-long-post" hidden><p class="desk-help">For this longer post, copy the Markdown below, continue to GitHub, and paste it into the file editor before committing.</p></div>
+  <div class="desk-dialog-actions"><button type="button" id="writer-copy" class="desk-button">Copy Markdown</button><a id="writer-continue" class="desk-button desk-primary" target="_blank" rel="noopener noreferrer">Continue to GitHub</a></div>
+  <p id="writer-copy-status" role="status" class="desk-help" aria-live="polite"></p>
+  <details id="writer-export-details"><summary>View Markdown export</summary><textarea id="writer-export" class="desk-source" rows="10" readonly aria-label="Complete Markdown export"></textarea></details>
+  <p class="desk-help desk-publish-note">Nothing is published until you commit on GitHub.</p>
+</dialog>
+<dialog id="writer-image-dialog" class="desk-dialog" aria-labelledby="image-heading">
+  <button type="button" class="desk-dialog-close" data-close-dialog aria-label="Close image dialog">×</button>
+  <h2 id="image-heading">Insert an image</h2>
+  <form id="writer-image-form" class="desk-settings-content"><label>Image URL or path<input id="writer-image-url" placeholder="https://… or /images/example.png" required></label><label>Image description<input id="writer-image-alt" placeholder="Describe the image"></label><p class="desk-help">Use a hosted image or a file already uploaded to your repository.</p><button class="desk-button desk-primary" type="submit">Insert image</button></form>
+</dialog>
+<noscript><p>This editor needs JavaScript. You can also write in Typora and upload your Markdown file to the repository.</p></noscript>
