@@ -15,7 +15,15 @@
   let editorReady = false;
   let loading = false;
   let activeType = new URLSearchParams(location.search).get('type') === 'paper' ? 'paper' : 'blog';
-  const templates = {blog:'',paper:'## In one sentence\n\n\n## Problem and method\n\n\n## Evidence in the paper\n\n\n## My insights\n\n\n## Questions and limitations\n\n'};
+  // Only remove untouched outlines left by older versions, never written content.
+  const legacyOutlines = [
+    ['The question','My understanding','Evidence','Limitations and open questions','References'],
+    ['In one sentence','Problem and method','Evidence in the paper','My insights','Questions and limitations'],
+    ['In one sentence','Problem and method','Evidence in the paper','My insights','Questions and limitations','What I would test next']
+  ].map(headings=>headings.map(heading=>'## '+heading).join('\n'));
+  function isUnusedOutline(body) {
+    return legacyOutlines.includes(body.split(/\r?\n/).map(line=>line.trim()).filter(Boolean).join('\n'));
+  }
   function key(type) { return 'ruojun-writing-draft-v1-' + type; }
   function today() { const d=new Date(); return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-'); }
   function grow(el) { el.style.height='auto'; el.style.height=el.scrollHeight+'px'; }
@@ -43,7 +51,8 @@
     if (saved && typeof saved==='object') fields.forEach(name=>{const el=field(name);if(el.type==='checkbox')el.checked=saved[name]===true;else if(typeof saved[name]==='string')el.value=saved[name];});
     if(!field('date').value)field('date').value=today();
     if(!field('slug').value)field('slug').value=(type==='paper'?'paper-':'post-')+Date.now().toString(36);
-    if(!saved)field('body').value=templates[type];
+    const removedOutline=isUnusedOutline(field('body').value);
+    if(!saved||removedOutline)field('body').value='';
     document.getElementById('paper-fields').hidden=type!=='paper';
     field('paper-title').required=type==='paper';field('paper-url').required=type==='paper';
     field('kind-label').textContent=type==='paper'?'Research paper discussion':'Blog post';
@@ -51,6 +60,7 @@
     grow(field('title'));grow(field('summary'));updateCount();
     loading=false;
     status.textContent=saved?'Saved draft restored':'Your draft stays in this browser';
+    if(removedOutline)save();
   }
   function hasMath(body) {
     const prose=body.replace(/```[\s\S]*?```/g,'').replace(/`[^`]*`/g,'');
