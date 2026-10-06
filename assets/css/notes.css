@@ -659,6 +659,9 @@
 a:focus-visible,button:focus-visible{outline:2px solid #ca6f6f;outline-offset:3px}
 .masthead .visible-links{flex-wrap:wrap}
 .masthead__menu-item a[aria-current=page]{color:#ca6f6f}
+.masthead__menu-item a[aria-current=location]{color:#ca6f6f}
+.research-home>section:target>h2{color:#ca6f6f}
+.research-home>section:focus-visible{outline:2px solid #efd2d2;outline-offset:6px}
 .author__avatar img{aspect-ratio:1;object-fit:cover}
 .notes-profile-topics{font-size:12px;line-height:1.7;color:#646769;margin-top:16px}
 .notes-profile-topics strong{display:block;margin-bottom:4px}
