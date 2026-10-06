@@ -1,0 +1,19 @@
+---
+layout: default
+---
+{% if page.collection == 'papers' %}{% assign back = '/papers/' %}{% assign label = '论文分享' %}{% else %}{% assign back = '/blog/' %}{% assign label = '技术笔记' %}{% endif %}
+<div id="main" role="main">
+  {% include sidebar.html %}
+  <article class="page notes-article">
+    <a class="notes-back" href="{{ back | relative_url }}">返回{{ label }}</a>
+    <header class="notes-article-header">
+      <p class="notes-eyebrow">{% if page.collection == 'papers' %}PAPER NOTE{% else %}BLOG NOTE{% endif %}</p>
+      <h1 class="page__title">{{ page.title }}</h1>
+      <p class="notes-meta"><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%Y.%m.%d' }}</time><span>·</span>{{ site.author.name }}</p>
+      {% if page.paper_title %}<p class="notes-paper-title">原论文：{{ page.paper_title }}</p>{% endif %}
+      {% if page.paper_url %}<div class="notes-sources"><a href="{{ page.paper_url | escape }}" rel="noopener noreferrer">阅读原论文</a>{% if page.code_url and page.code_url != '' %}<a href="{{ page.code_url | escape }}" rel="noopener noreferrer">项目代码</a>{% endif %}</div>{% endif %}
+    </header>
+    <section class="page__content" itemprop="text">{{ content }}</section>
+    <footer class="notes-article-footer"><div class="notes-tags">{% for tag in page.tags %}<span>{{ tag }}</span>{% endfor %}</div><a href="{{ back | relative_url }}">继续阅读{{ label }}</a></footer>
+  </article>
+</div>
