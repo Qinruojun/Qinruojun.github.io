@@ -1,0 +1,93 @@
+locale: zh-CN
+title: "Ruojun Qin · 技术笔记"
+name: "Ruojun Qin"
+description: "关于具身智能、机器人学习的技术笔记、论文解读与个人思考。"
+url: "https://qinruojun.github.io"
+baseurl: ""
+repository: "Qinruojun/Qinruojun.github.io"
+timezone: Asia/Shanghai
+encoding: utf-8
+
+# Same AcademicPages-derived theme as the reference, pinned to an inspected commit.
+remote_theme: "oplisty/oplisty.github.io@77a3d7c5969206e07ffb76c69b5b03e05d84ed39"
+
+author:
+  name: "Ruojun Qin"
+  bio: "关注具身智能与机器人学习。记录技术理解，也记录尚未想清楚的问题。"
+  github: Qinruojun
+  topics:
+    - Embodied AI
+    - Vision–Language–Action
+    - Robot Learning
+
+include:
+  - _pages
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - LICENSE-THEME
+  - templates
+  - vendor
+  - .bundle
+  - .github
+  - output
+
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  hard_wrap: false
+  auto_ids: true
+  math_engine: mathjax
+  syntax_highlighter: rouge
+
+plugins:
+  - jekyll-remote-theme
+  - jekyll-sitemap
+
+collections:
+  blog:
+    output: true
+    permalink: /blog/:path/
+  papers:
+    output: true
+    permalink: /papers/:path/
+
+defaults:
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: archive
+      author_profile: true
+  - scope:
+      path: ""
+      type: blog
+    values:
+      layout: note
+      author_profile: true
+      math: false
+  - scope:
+      path: ""
+      type: papers
+    values:
+      layout: note
+      author_profile: true
+      math: false
+
+breadcrumbs: false
+future: false
+read_more: disabled
+words_per_minute: 220
+analytics:
+  provider: false
+comments:
+  provider: false
+atom_feed:
+  hide: false
+  path: /feed.xml
+compress_html:
+  clippings: all
+  ignore:
+    envs: development
