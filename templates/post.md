@@ -1,28 +1,18 @@
 ---
-title: "填写文章标题"
+title: "Your post title"
 date: "2026-10-06"
-summary: "用一两句话说明这篇笔记回答什么问题，以及你的核心观点。"
-tags: ["VLA", "技术笔记"]
+summary: "The question this post explores and your main insight."
+tags: ["VLA", "Technical Notes"]
 published: false
 math: false
 ---
 
-## 我想回答什么问题
+## The question
 
-写下一个具体问题，以及它为什么值得讨论。
+## My understanding
 
-## 我的理解
+## Evidence
 
-先给出直觉，再补充必要的定义、推导或代码。
+## Limitations and open questions
 
-## 支持这个判断的证据
-
-引用原始论文、官方文档或可复现的实验。区分已验证事实和你的解释。
-
-## 适用范围与不确定性
-
-哪些条件下这个判断成立？哪些问题仍需要验证？
-
-## 参考资料
-
-- 补充原始资料链接。
+## References
