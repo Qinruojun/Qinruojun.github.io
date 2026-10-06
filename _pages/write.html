@@ -1,0 +1,29 @@
+---
+permalink: /write/
+title: Write a Post
+sitemap: false
+---
+<p class="writer-intro">Write in Markdown. Your draft stays in this browser until you choose to publish.</p>
+<form id="post-writer" class="post-writer" data-repository="{{ site.repository }}">
+<div class="writer-grid">
+<label>Post type<select id="writer-type" name="type"><option value="blog">Blog post</option><option value="paper">Research paper discussion</option></select></label>
+<label>Date<input id="writer-date" name="date" type="date" required></label>
+</div>
+<label>Title<input id="writer-title" name="title" placeholder="What would you like to share?" required maxlength="200"></label>
+<label>Summary<textarea id="writer-summary" name="summary" rows="2" placeholder="A short description for the article card."></textarea></label>
+<div class="writer-grid">
+<label>Tags<input id="writer-tags" name="tags" placeholder="VLA, Robot Learning"></label>
+<label>URL name<input id="writer-slug" name="slug" pattern="[a-z0-9]+(?:-[a-z0-9]+)*" required aria-describedby="slug-help"></label>
+</div>
+<p class="writer-help" id="slug-help">Use lowercase letters, numbers, and hyphens. Each new post needs a unique name.</p>
+<div id="paper-fields" hidden><label>Original paper title<input id="writer-paper-title" name="paperTitle"></label><div class="writer-grid"><label>Paper URL<input id="writer-paper-url" name="paperUrl" type="url" placeholder="https://arxiv.org/abs/..."></label><label>Code URL (optional)<input id="writer-code-url" name="codeUrl" type="url" placeholder="https://github.com/..."></label></div></div>
+<label>Cover image URL or path (optional)<input id="writer-cover" name="cover" placeholder="/images/my-post/cover.png"></label>
+<label class="writer-checkbox"><input id="writer-math" name="math" type="checkbox"> Enable LaTeX math</label>
+<label>Post content<textarea id="writer-body" name="body" rows="18" spellcheck="true" required placeholder="## The question&#10;&#10;Write your ideas here..."></textarea></label>
+<p class="writer-help">Markdown supports headings, links, images, tables, and fenced code blocks. You can also paste Markdown from Obsidian.</p>
+<div class="writer-actions"><button class="write-button" type="submit">Open GitHub Editor</button><button type="button" id="writer-copy">Copy Markdown</button><button type="button" id="writer-download">Download .md</button><button type="button" id="writer-new">New Draft</button></div>
+<p id="writer-status" class="writer-status" role="status" aria-live="polite">Drafts are saved in this browser.</p>
+<div id="writer-long-post" class="writer-handoff" hidden><p>This post is too long to prefill safely. Copy the Markdown, open GitHub, and paste it into the file editor.</p><a id="writer-open-empty" target="_blank" rel="noopener noreferrer">Open GitHub for this post</a><details><summary>Show Markdown for manual copying</summary><textarea id="writer-export" rows="12" readonly aria-label="Complete Markdown export"></textarea></details></div>
+</form>
+<div class="writer-guide"><h2>Publish in three steps</h2><ol><li>Write your post here, then select <strong>Open GitHub Editor</strong>.</li><li>Sign in as the repository owner and use GitHub's <strong>Preview</strong> tab to check your post.</li><li>Select <strong>Commit changes</strong> and commit to <strong>main</strong>. The site updates after the Pages build completes.</li></ol><p>For an existing post, open the article and select <strong>Edit this Post</strong>. Only the repository owner and authorized collaborators can publish changes.</p></div>
+<noscript><p>JavaScript is needed for the draft editor. You can also <a href="https://github.com/{{ site.repository }}/new/main/_blog">create a Markdown post directly on GitHub</a>.</p></noscript>
