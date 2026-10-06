@@ -1,9 +1,9 @@
 <div itemscope itemtype="https://schema.org/Person">
-<div class="author__avatar"><img src="https://github.com/Qinruojun.png" alt="Ruojun Qin 的 GitHub 头像" width="175" height="175"></div>
+<div class="author__avatar"><img src="https://github.com/Qinruojun.png" alt="Ruojun Qin's GitHub avatar" width="175" height="175"></div>
 <div class="author__content"><h3 class="author__name" itemprop="name">{{ site.author.name }}</h3><p class="author__bio">{{ site.author.bio }}</p></div>
 <div class="author__urls-wrapper"><ul class="author__urls social-icons">
 <li><a href="https://github.com/{{ site.author.github }}"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub / {{ site.author.github }}</a></li>
-<li><a href="{{ '/feed.xml' | relative_url }}"><i class="fas fa-fw fa-rss" aria-hidden="true"></i> RSS 订阅</a></li>
+<li><a href="{{ '/feed.xml' | relative_url }}"><i class="fas fa-fw fa-rss" aria-hidden="true"></i> RSS Feed</a></li>
 </ul></div>
-<div class="notes-profile-topics"><strong>研究兴趣</strong>{% for topic in site.author.topics %}{{ topic }}{% unless forloop.last %}<br>{% endunless %}{% endfor %}</div>
+<div class="notes-profile-topics"><strong>Research interests</strong>{% for topic in site.author.topics %}{{ topic }}{% unless forloop.last %}<br>{% endunless %}{% endfor %}</div>
 </div>
