@@ -1,2 +1,5 @@
 <script src="{{ '/assets/js/search.js' | relative_url }}?v=20261006-4" defer></script>
-{% if page.url == '/write/' %}<script src="{{ '/assets/js/writer.js' | relative_url }}?v=20261006-3" defer></script>{% endif %}
+{% if page.url == '/write/' %}
+<script src="https://cdn.jsdelivr.net/npm/vditor@4.0.0/dist/index.min.js" defer></script>
+<script src="{{ '/assets/js/writer.js' | relative_url }}?v=20261007-1" defer></script>
+{% endif %}
