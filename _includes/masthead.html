@@ -1,12 +1,8 @@
 <a class="skip-link" href="#main">跳到正文</a>
-<header class="notes-masthead">
-  <div class="notes-masthead-inner">
-    <a class="notes-brand" href="{{ '/blog/' | relative_url }}">Ruojun Qin <span>/ 技术笔记</span></a>
-    <nav class="notes-nav" aria-label="主导航">
-      {% for link in site.data.navigation.main %}
-        {% if link.url contains 'http' %}{% assign href = link.url %}{% else %}{% assign href = link.url | relative_url %}{% endif %}
-        <a href="{{ href }}" {% if page.url contains link.url %}aria-current="page"{% endif %}>{{ link.title }}</a>
-      {% endfor %}
-    </nav>
-  </div>
-</header>
+<div class="masthead"><div class="masthead__inner-wrap"><div class="masthead__menu">
+<nav id="site-nav" class="greedy-nav" aria-label="主导航"><ul class="visible-links">
+<li class="masthead__menu-item masthead__menu-item--lg"><a href="{{ '/' | relative_url }}">Ruojun Qin 的研究空间</a></li>
+{% for link in site.data.navigation.main %}
+<li class="masthead__menu-item"><a href="{% if link.url contains 'http' %}{{ link.url }}{% else %}{{ link.url | relative_url }}{% endif %}"{% if page.url contains link.url %} aria-current="page"{% endif %}>{{ link.title }}</a></li>
+{% endfor %}
+</ul></nav></div></div></div>
