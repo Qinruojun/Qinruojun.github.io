@@ -1,11 +1,9 @@
 ---
 permalink: /papers/
-title: 论文分享
-intro: "论文解读、技术判断，以及阅读中产生的疑问与启发。"
+title: Research Paper Sharing
+intro: "Paper discussions, evidence, and the ideas they leave me thinking about."
 ---
 {% assign notes = site.papers | where_exp: 'note', 'note.published != false' | sort: 'date' | reverse %}
-{% if notes.size > 0 %}
-{% include note-list.html items=notes heading='全部论文解读' %}
-{% else %}
-<div class="blog-empty-state"><p>暂时还没有公开的论文笔记。</p><p>这里将记录论文的问题、方法与证据，以及我的理解和看法。</p></div>
+{% if notes.size > 0 %}{% include note-list.html items=notes %}{% else %}
+<div class="blog-empty-state"><p>No paper discussions have been published yet.</p><p>This space will collect research questions, methods, evidence, and my own interpretations.</p></div>
 {% endif %}
