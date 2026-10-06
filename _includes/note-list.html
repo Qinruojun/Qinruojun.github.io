@@ -1,7 +1,7 @@
 <div class="blog-search-panel">
 <label class="blog-search-panel__label" for="note-search">Search posts</label>
 <div class="blog-search-panel__input-wrap"><input class="blog-search-panel__input" id="note-search" type="search" data-search aria-label="Search blog posts" placeholder="Search by title, excerpt, tag, or category"><button class="blog-search-panel__clear" type="button" data-clear>Clear</button></div>
-<p class="blog-search-panel__status" aria-live="polite" data-result-count>{{ include.items.size }} posts total</p>
+<p class="blog-search-panel__status" aria-live="polite" data-result-count>{{ include.items.size }} {% if include.items.size == 1 %}post{% else %}posts{% endif %} total</p>
 </div>
 <div class="blog-card-list">
 {% for post in include.items %}
@@ -16,7 +16,7 @@
 <text x="500" y="112" text-anchor="middle" font-size="18" fill="#5f6368">Technical notes · Paper reading · Personal insights</text>
 <g fill="#fff" stroke="#444" stroke-width="2"><rect x="50" y="180" width="260" height="180" rx="6"/><rect x="370" y="180" width="260" height="180" rx="6"/><rect x="690" y="180" width="260" height="180" rx="6"/></g>
 <g fill="#202124" text-anchor="middle" font-size="25"><text x="180" y="239">Question</text><text x="500" y="239">Understand</text><text x="820" y="239">Examine</text></g>
-<g fill="#5f6368" text-anchor="middle" font-size="19"><text x="180" y="285">What is the problem?</text><text x="500" y="285">Why this design?</text><text x="820" y="285">What does the evidence show?</text></g>
+<g fill="#5f6368" text-anchor="middle" font-size="19"><text x="180" y="285">What is the problem?</text><text x="500" y="285">Why this design?</text><text x="820" y="285">What is the evidence?</text></g>
 <g stroke="#444" stroke-width="2" fill="none"><path d="M315 270H360m-9-6 9 6-9 6"/><path d="M635 270H680m-9-6 9 6-9 6"/></g>
 <path d="M80 410H920" stroke="#eee"/>
 <text x="500" y="460" text-anchor="middle" font-size="23" fill="#ca6f6f">Share a perspective. Leave room for open questions.</text>
