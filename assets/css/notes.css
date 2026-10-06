@@ -653,6 +653,7 @@
 /* Local adaptations: personal content, keyboard access, and smaller screens.
    Reference layout and blog-card styles above: WowPage (MIT), see LICENSE-THEME. */
 [hidden]{display:none!important}
+.main-heading{font-size:1.563em;line-height:1.2;margin:0 0 .5em}
 .skip-link{position:absolute;left:16px;top:-80px;z-index:100;background:#fff;padding:10px}
 .skip-link:focus{top:8px}
 a:focus-visible,button:focus-visible{outline:2px solid #ca6f6f;outline-offset:3px}
