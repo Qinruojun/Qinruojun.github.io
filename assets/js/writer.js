@@ -9,6 +9,8 @@
   const rich = field('rich');
   const publishDialog = field('publish-dialog');
   const imageDialog = field('image-dialog');
+  const formulaDialog = field('formula-dialog');
+  let formulaSelection = null;
   const fields = ['date','title','summary','tags','slug','paper-title','paper-url','code-url','cover','math','body'];
   const cdn = 'https://cdn.jsdelivr.net/npm/vditor@4.0.0';
   let editor = null;
@@ -110,6 +112,11 @@
   function labelEditor() {
     rich.querySelectorAll('[contenteditable="true"],textarea').forEach(el=>{el.setAttribute('role','textbox');el.setAttribute('aria-label','Post content');el.setAttribute('aria-multiline','true');});
   }
+  function openFormula() {
+    const selection=window.getSelection();
+    formulaSelection=selection.rangeCount&&rich.contains(selection.anchorNode)?selection.getRangeAt(0).cloneRange():null;
+    formulaDialog.showModal();field('formula-source').focus();
+  }
   function startEditor() {
     if(typeof Vditor==='undefined') {field('loading').textContent='The live editor could not load. You can still write in Markdown below, or reload to try again.';return;}
     rich.hidden=false;rich.setAttribute('aria-busy','true');
@@ -120,6 +127,7 @@
         cache:{enable:false},counter:{enable:false},toolbarConfig:{pin:false},
         toolbar:['headings','bold','italic','link','|','quote','list','ordered-list','|','code','table',
           {name:'image-link',tip:'Insert image',icon:'<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 4h16v16H4zM4 16l5-5 4 4 3-3 4 4M16 8h.01" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',click:()=>imageDialog.showModal()},
+          {name:'formula',tip:'Insert formula',icon:'<span aria-hidden="true" style="font:italic 700 18px Georgia,serif">∑</span>',click:openFormula},
           '|','undo','redo','|','edit-mode','fullscreen'],
         preview:{delay:150,maxWidth:820,theme:{current:'light',path:cdn+'/dist/css/content-theme'},hljs:{enable:true,style:'github'},math:{engine:'KaTeX'},markdown:{sanitize:true,codeBlockPreview:true,mathBlockPreview:true}},
         input:received,blur:received,
@@ -164,6 +172,22 @@
     save();field('image-form').reset();
   });
   field('image-url').addEventListener('input',()=>field('image-url').setCustomValidity(''));
+  field('formula-form').addEventListener('submit',e=>{
+    e.preventDefault();
+    const source=field('formula-source');
+    // Accept pasted delimiters too, without inserting duplicate dollar signs.
+    let latex=source.value.trim().replace(/^\$\$([\s\S]*)\$\$$/,'$1').replace(/^\$([^$]*)\$$/,'$1').trim();
+    if(!latex){source.setCustomValidity('Enter a formula first.');source.reportValidity();return;}
+    const display=field('formula-placement').value==='display';
+    const value=display?'\n\n$$\n'+latex+'\n$$\n\n':'$'+latex.replace(/\r?\n/g,' ')+'$ ';
+    formulaDialog.close();editor.focus();
+    if(formulaSelection&&rich.contains(formulaSelection.startContainer)){
+      const selection=window.getSelection();selection.removeAllRanges();selection.addRange(formulaSelection);
+    }
+    editor.insertValue(value);field('math').checked=true;syncBody();save();
+    field('formula-form').reset();formulaSelection=null;
+  });
+  field('formula-source').addEventListener('input',()=>field('formula-source').setCustomValidity(''));
   window.addEventListener('pagehide',()=>{syncBody();save();});
   load(activeType);startEditor();
 })();
