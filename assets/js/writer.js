@@ -17,6 +17,32 @@
   let editorReady = false;
   let loading = false;
   let activeType = new URLSearchParams(location.search).get('type') === 'paper' ? 'paper' : 'blog';
+  // A monotonic clock capped at the last interaction + 60 seconds. Delayed
+  // timers (background tabs or a sleeping laptop) cannot add hours of idle time.
+  class EditingClock {
+    constructor(now=()=>performance.now()) {this.now=now;this.reset(0);}
+    reset(total=0) {this.total=Number.isFinite(total)&&total>0?total:0;this.last=this.now();this.activity=null;}
+    settle() {
+      const now=this.now();
+      if(this.activity!==null)this.total+=Math.max(0,Math.min(now,this.activity+60000)-this.last);
+      this.last=now;return this.total;
+    }
+    touch() {this.settle();this.activity=this.now();this.last=this.activity;}
+    pause() {this.settle();this.activity=null;}
+    active() {return this.activity!==null&&this.now()<this.activity+60000;}
+  }
+  const editingClock=new EditingClock();
+  function showEditingTime() {
+    const seconds=Math.floor(editingClock.settle()/1000);
+    const parts=[Math.floor(seconds/3600),Math.floor(seconds/60)%60,seconds%60];
+    field('time').textContent='Edited '+parts.map(n=>String(n).padStart(2,'0')).join(':')+' · '+(editingClock.active()?'Active':'Paused');
+  }
+  function editingActivity(e) {
+    if(loading||document.hidden||!document.hasFocus())return;
+    if(e.type==='keydown'&&(e.metaKey||e.ctrlKey||e.altKey||['Shift','Control','Alt','Meta','Tab','Escape'].includes(e.key)))return;
+    if(!e.target.closest('textarea,input,[contenteditable="true"],.vditor-toolbar'))return;
+    editingClock.touch();showEditingTime();
+  }
   // Only remove untouched outlines left by older versions, never written content.
   const legacyOutlines = [
     ['The question','My understanding','Evidence','Limitations and open questions','References'],
@@ -33,6 +59,7 @@
   function collect() {
     const result={};
     fields.forEach(name=>{const el=field(name);result[name]=el.type==='checkbox'?el.checked:el.value;});
+    result.editingMs=Math.floor(editingClock.settle());
     return result;
   }
   function updateCount() {
@@ -49,6 +76,7 @@
     loading=true;
     let saved=null;
     try { saved=JSON.parse(localStorage.getItem(key(type))||'null'); } catch (_) {}
+    editingClock.reset(saved&&saved.editingMs);showEditingTime();
     form.reset(); kind.value=type;
     if (saved && typeof saved==='object') fields.forEach(name=>{const el=field(name);if(el.type==='checkbox')el.checked=saved[name]===true;else if(typeof saved[name]==='string')el.value=saved[name];});
     if(!field('date').value)field('date').value=today();
@@ -74,7 +102,7 @@
     const lines=['---','title: '+JSON.stringify(v.title.trim()),'date: '+JSON.stringify(v.date),'summary: '+JSON.stringify(v.summary.trim()),'tags: '+JSON.stringify(v.tags.split(',').map(s=>s.trim()).filter(Boolean))];
     if(v.cover.trim())lines.push('cover: '+JSON.stringify(v.cover.trim()));
     if(activeType==='paper')lines.push('paper_title: '+JSON.stringify(v['paper-title'].trim()),'paper_url: '+JSON.stringify(v['paper-url'].trim()),'code_url: '+JSON.stringify(v['code-url'].trim()));
-    lines.push('published: true','math: '+(v.math||hasMath(v.body)),'---','',v.body.trim(),'');
+    lines.push('published: true','math: '+(v.math||hasMath(v.body)),'editing_time_seconds: '+Math.floor(v.editingMs/1000),'---','',v.body.trim(),'');
     return lines.join('\n');
   }
   function filename() { return (activeType==='paper'?'_papers/':'_blog/')+field('slug').value.trim()+'.md'; }
@@ -188,6 +216,24 @@
     field('formula-form').reset();formulaSelection=null;
   });
   field('formula-source').addEventListener('input',()=>field('formula-source').setCustomValidity(''));
-  window.addEventListener('pagehide',()=>{syncBody();save();});
+  [form,field('formula-form'),field('image-form')].forEach(surface=>{
+    ['keydown','input','pointerdown'].forEach(event=>surface.addEventListener(event,editingActivity,true));
+  });
+  function pauseEditing() {editingClock.pause();showEditingTime();syncBody();save();}
+  window.addEventListener('blur',pauseEditing);
+  window.addEventListener('pagehide',pauseEditing);
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)pauseEditing();});
+  // Save only the time field during heartbeats, preserving the stored draft text.
+  let lastTimeSave=0;
+  setInterval(()=>{
+    if(document.hidden||!document.hasFocus())editingClock.pause();
+    showEditingTime();
+    const total=Math.floor(editingClock.total);
+    if(total===lastTimeSave||loading)return;
+    try {
+      const saved=JSON.parse(localStorage.getItem(key(activeType))||'null');
+      if(saved&&saved.slug===field('slug').value){saved.editingMs=total;localStorage.setItem(key(activeType),JSON.stringify(saved));lastTimeSave=total;}
+    }catch(_){status.textContent='Draft could not be saved. Download a copy to keep your writing.';}
+  },1000);
   load(activeType);startEditor();
 })();
