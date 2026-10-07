@@ -12,7 +12,7 @@
     const headers={Accept:'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28',...options.headers};
     if(credential)headers.Authorization='Bearer '+credential;
     let response;
-    try {response=await fetch(api+route,{...options,headers,cache:'no-store'});}catch(_){throw new Error('Cannot reach GitHub. Your draft is saved here; check your connection and retry.');}
+    try {response=await fetch(api+route,{...options,headers,cache:'no-store',signal:AbortSignal.timeout(15000)});}catch(_){throw new Error('Cannot reach GitHub. Your draft is saved here; check your connection and retry.');}
     const data=await response.json().catch(()=>({}));
     if(!response.ok){
       const messages={401:'Your GitHub connection has expired. Disconnect and connect again.',403:'GitHub denied this request. Check the token has Contents: Read and write for this repository, or retry after the API rate limit resets.',404:'This article or repository could not be found.',409:'This article changed on GitHub. Your draft is safe. Download it before reopening the latest version; it has not been overwritten.',422:'GitHub could not save this file. The URL name may already exist or the repository may require a different publishing rule.'};
