@@ -9,9 +9,11 @@ sitemap: false
     <a href="{{ '/blog/' | relative_url }}" class="desk-back">Back to Blog</a>
     <span id="writer-status" class="desk-status" role="status" aria-live="polite">Your draft stays in this browser.</span>
     <span id="writer-time" class="desk-status" title="Writing time for this draft. Pauses after 60 seconds without interaction, or when you leave this window. Saved in this browser; included in Markdown exports.">Edited 00:00:00 · Paused</span>
-    <div class="desk-actions"><button type="button" id="writer-download" class="desk-button">Download .md</button><button type="submit" class="desk-button desk-primary">Publish…</button></div>
+    <div class="desk-actions"><button type="button" id="writer-download" class="desk-button">Download .md</button><button type="submit" id="writer-publish" class="desk-button desk-primary">Publish</button></div>
   </div>
+  <p id="writer-publish-status" class="desk-help" role="status"></p>
   <div class="writing-sheet">
+    <div class="desk-bottom" style="border-top:0;margin-bottom:22px;flex-wrap:wrap"><button type="button" id="writer-connect" class="desk-button">Connect GitHub</button><label for="writer-drafts">My articles</label><select id="writer-drafts" aria-label="My articles" style="max-width:300px"></select><a id="writer-view" hidden>View published article</a></div>
     <h1 class="desk-sr-only">Write a Post</h1>
     <label class="desk-sr-only" for="writer-title">Title</label>
     <textarea id="writer-title" name="title" class="writing-title" rows="1" placeholder="Untitled" required maxlength="200"></textarea>
@@ -22,7 +24,7 @@ sitemap: false
       <div class="desk-settings-content">
         <div class="desk-grid"><label>Post type<select id="writer-type" name="type"><option value="blog">Blog post</option><option value="paper">Research paper discussion</option></select></label><label>Date<input id="writer-date" name="date" type="date" required></label></div>
         <div class="desk-grid"><label>Tags<input id="writer-tags" name="tags" placeholder="VLA, Robot Learning"></label><label>URL name<input id="writer-slug" name="slug" pattern="[a-z0-9]+(?:-[a-z0-9]+)*" required aria-describedby="slug-help"></label></div>
-        <p class="desk-help" id="slug-help">A unique URL for this post. Use lowercase letters, numbers, and hyphens.</p>
+        <p class="desk-help" id="slug-help">This permanent ID keeps the article, its draft, and editing time together.</p>
         <div id="paper-fields" hidden><label>Original paper title<input id="writer-paper-title" name="paperTitle"></label><div class="desk-grid"><label>Paper URL<input id="writer-paper-url" name="paperUrl" type="url" placeholder="https://arxiv.org/abs/..."></label><label>Code URL (optional)<input id="writer-code-url" name="codeUrl" type="url" placeholder="https://github.com/..."></label></div></div>
         <label>Cover image URL or path (optional)<input id="writer-cover" name="cover" placeholder="/images/my-post/cover.png"></label>
         <label class="desk-checkbox"><input id="writer-math" name="math" type="checkbox"> Enable formulas in the published article</label>
@@ -39,17 +41,18 @@ sitemap: false
     <details class="desk-guide"><summary>Formatting guide</summary><p>Type <code>## </code> for a heading, <code>**bold**</code> for emphasis, or <code>- </code> for a list. Use the toolbar for links, images, tables, and code blocks.</p><p>Write inline math with <code>$…$</code>, or put <code>$$</code> on separate lines for a display equation. Formatting appears in place as you write. The toolbar also lets you switch to rich text or Markdown source.</p><p>Drafts stay in this browser. Download a Markdown copy to keep a portable backup.</p></details>
   </div>
 </form>
-<dialog id="writer-publish-dialog" class="desk-dialog" aria-labelledby="publish-heading">
-  <button type="button" class="desk-dialog-close" data-close-dialog aria-label="Close publishing dialog">×</button>
-  <h2 id="publish-heading">Ready to publish?</h2>
-  <p id="publish-title" class="desk-publish-title"></p>
-  <p class="desk-help">Your writing is ready. GitHub handles the final confirmation: select <strong>Commit changes</strong> and commit to <strong>main</strong>. Your public site updates after the build finishes.</p>
-  <p id="publish-prefill" class="desk-help">Your complete post will already be filled in.</p>
-  <div id="writer-long-post" hidden><p class="desk-help">For this longer post, copy the Markdown below, continue to GitHub, and paste it into the file editor before committing.</p></div>
-  <div class="desk-dialog-actions"><button type="button" id="writer-copy" class="desk-button">Copy Markdown</button><a id="writer-continue" class="desk-button desk-primary" target="_blank" rel="noopener noreferrer">Continue to GitHub</a></div>
-  <p id="writer-copy-status" role="status" class="desk-help" aria-live="polite"></p>
-  <details id="writer-export-details"><summary>View Markdown export</summary><textarea id="writer-export" class="desk-source" rows="10" readonly aria-label="Complete Markdown export"></textarea></details>
-  <p class="desk-help desk-publish-note">Nothing is published until you commit on GitHub.</p>
+<dialog id="writer-connect-dialog" class="desk-dialog" aria-labelledby="connect-heading">
+  <button type="button" class="desk-dialog-close" data-close-dialog aria-label="Close GitHub connection">×</button>
+  <h2 id="connect-heading">Connect GitHub</h2>
+  <p class="desk-help">Publish directly to your own blog. Use a fine-grained personal access token for <strong>Qinruojun.github.io</strong> only, with <strong>Contents: Read and write</strong>.</p>
+  <p class="desk-help"><a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">Create a token on GitHub</a>. Choose an expiration date. Paste it here, not into a chat.</p>
+  <form id="writer-connect-form" class="desk-settings-content">
+    <label>GitHub token<input id="writer-token" type="password" autocomplete="off" spellcheck="false" required></label>
+    <label class="desk-checkbox"><input id="writer-remember" type="checkbox"> Keep connected in this tab until it closes</label>
+    <p class="desk-help">The token is sent only to GitHub. Without this option it stays in memory and is forgotten when you leave this page. Disconnect GitHub clears this tab’s saved token.</p>
+    <button type="submit" class="desk-button desk-primary">Connect</button>
+    <p id="writer-connect-status" class="desk-help" role="status"></p>
+  </form>
 </dialog>
 <dialog id="writer-image-dialog" class="desk-dialog" aria-labelledby="image-heading">
   <button type="button" class="desk-dialog-close" data-close-dialog aria-label="Close image dialog">×</button>
