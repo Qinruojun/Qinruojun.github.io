@@ -2,7 +2,7 @@
 <meta name="theme-color" content="#ffffff">
 <link rel="icon" type="image/svg+xml" href="{{ '/assets/favicon.svg' | relative_url }}">
 <link rel="stylesheet" href="{{ '/assets/css/notes.css' | relative_url }}?v=20261007-3">
-{% if page.url == '/write/' %}
+{% if page.url == '/write/' or page.url == '/read/' %}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vditor@4.0.0/dist/index.css">
 <link rel="stylesheet" href="{{ '/assets/css/writer.css' | relative_url }}?v=20261007-4">
 {% endif %}
