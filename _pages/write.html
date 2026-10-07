@@ -55,4 +55,15 @@ sitemap: false
   <h2 id="image-heading">Insert an image</h2>
   <form id="writer-image-form" class="desk-settings-content"><label>Image URL or path<input id="writer-image-url" placeholder="https://… or /images/example.png" required></label><label>Image description<input id="writer-image-alt" placeholder="Describe the image"></label><p class="desk-help">Use a hosted image or a file already uploaded to your repository.</p><button class="desk-button desk-primary" type="submit">Insert image</button></form>
 </dialog>
+<dialog id="writer-formula-dialog" class="desk-dialog" aria-labelledby="formula-heading">
+  <button type="button" class="desk-dialog-close" data-close-dialog aria-label="Close formula dialog">×</button>
+  <h2 id="formula-heading">Insert a formula</h2>
+  <form id="writer-formula-form" class="desk-settings-content">
+    <label>Placement<select id="writer-formula-placement"><option value="inline">Inline — within a sentence</option><option value="display">Display — on its own line</option></select></label>
+    <label for="writer-formula-source">LaTeX formula</label>
+    <textarea id="writer-formula-source" class="desk-source" rows="5" spellcheck="false" required placeholder="e.g. \frac{a}{b} or \sum_{i=1}^{n} x_i" aria-describedby="formula-help"></textarea>
+    <p id="formula-help" class="desk-help">Enter LaTeX without the surrounding $ signs. The formula renders in your draft after insertion. Click it in the editor to edit its source.</p>
+    <button class="desk-button desk-primary" type="submit">Insert formula</button>
+  </form>
+</dialog>
 <noscript><p>This editor needs JavaScript. You can also write in Typora and upload your Markdown file to the repository.</p></noscript>
