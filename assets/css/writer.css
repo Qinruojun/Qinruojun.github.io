@@ -39,6 +39,9 @@ textarea.writing-summary{font:400 17px/1.7 Arial,sans-serif;color:#757b84;margin
 #writer-rich .vditor-content{background:#fff}
 #writer-rich .vditor-reset{font:17px/1.9 Georgia,'Noto Serif SC','Songti SC',serif;color:#30343b;padding:26px 0 90px!important;max-width:100%!important}
 #writer-rich .vditor-reset p,#writer-rich .vditor-reset li{font:inherit}
+/* The site's form reset hides every <br>. Vditor needs them for empty
+   paragraphs and caret placement after Enter, including inside lists. */
+#writer-rich .vditor-reset br{display:revert}
 #writer-rich .vditor-reset h1,#writer-rich .vditor-reset h2,#writer-rich .vditor-reset h3{font-family:Georgia,'Noto Serif SC','Songti SC',serif;font-weight:700;color:#23262b;border:0;padding-bottom:0;line-height:1.4}
 #writer-rich .vditor-reset h1{font-size:30px}
 #writer-rich .vditor-reset h2{font-size:25px;margin:26px 0 13px}
