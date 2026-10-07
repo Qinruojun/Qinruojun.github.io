@@ -42,6 +42,7 @@
     if(loading||document.hidden||!document.hasFocus())return;
     if(e.type==='keydown'&&(e.metaKey||e.ctrlKey||e.altKey||['Shift','Control','Alt','Meta','Tab','Escape'].includes(e.key)))return;
     if(!e.target.closest('textarea,input,[contenteditable="true"],.vditor-toolbar'))return;
+    if(e.type==='input')draftDirty=true;
     editingClock.touch();showEditingTime();
   }
   // Only remove untouched outlines left by older versions, never written content.
@@ -95,17 +96,18 @@
     field('paper-title').required=type==='paper';field('paper-url').required=type==='paper';
     field('kind-label').textContent=type==='paper'?'Research paper discussion':'Blog post';
     field('publish').textContent=published?'Publish changes':'Publish';
+    field('view').hidden=!published;if(published)field('view').href=store.readerURL(type,id);
     if(editorReady)editor.setValue(field('body').value,true);
     grow(field('title'));grow(field('summary'));updateCount();loading=false;
     save();refreshDrafts();store.connectionLabel();
     history.replaceState(null,'',store.editorURL(type,id));
   }
   async function load(type,id) {
-    loading=true;field('publish').disabled=true;
+    loading=true;form.inert=true;field('publish').disabled=true;
     const legacy=store.migrate(type);
     id=id||store.active(type)||(legacy&&legacy.slug);
-    if(!id){applyDraft(type,freshId(),null);field('publish').disabled=false;return;}
-    if(!store.validId(id)){status.textContent='Invalid article URL.';return;}
+    if(!id){applyDraft(type,freshId(),null);field('publish').disabled=false;form.inert=false;return;}
+    if(!store.validId(id)){status.textContent='Invalid article URL.';form.inert=false;return;}
     const local=store.getDraft(type,id);
     try {
       const remote=await store.read(type,id);
@@ -117,7 +119,7 @@
       if(error.status===404){applyDraft(type,id,local);}
       else if(local){applyDraft(type,id,local);status.textContent='Offline draft restored. '+error.message;}
       else {loading=false;status.textContent=error.message;return;}
-    }finally{field('publish').disabled=false;}
+    }finally{field('publish').disabled=false;form.inert=false;}
   }
   function hasMath(body) {
     const prose=body.replace(/```[\s\S]*?```/g,'').replace(/`[^`]*`/g,'');
@@ -219,7 +221,7 @@
     const encoded=url.replace(/\s/g,c=>encodeURIComponent(c)).replace(/\(/g,'%28').replace(/\)/g,'%29');
     const value='!['+alt+']('+encoded+')\n';
     imageDialog.close();if(editorReady){editor.focus();editor.insertValue(value);syncBody();}else field('body').value+='\n'+value;
-    save();field('image-form').reset();
+    draftDirty=true;save();field('image-form').reset();
   });
   field('image-url').addEventListener('input',()=>field('image-url').setCustomValidity(''));
   field('formula-form').addEventListener('submit',e=>{
@@ -234,7 +236,7 @@
     if(formulaSelection&&rich.contains(formulaSelection.startContainer)){
       const selection=window.getSelection();selection.removeAllRanges();selection.addRange(formulaSelection);
     }
-    editor.insertValue(value);field('math').checked=true;syncBody();save();
+    editor.insertValue(value);field('math').checked=true;draftDirty=true;syncBody();save();
     field('formula-form').reset();formulaSelection=null;
   });
   field('formula-source').addEventListener('input',()=>field('formula-source').setCustomValidity(''));
